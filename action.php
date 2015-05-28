@@ -17,7 +17,8 @@ class action_plugin_autostartpage extends DokuWiki_Action_Plugin {
      * @param Doku_Event_Handler $controller DokuWiki's event controller object
      * @return void
      */
-    public function register(Doku_Event_Handler &$controller) {
+    public function register(Doku_Event_Handler &$controller) 
+    {
        $controller->register_hook('IO_NAMESPACE_CREATED', 'AFTER', $this, 'autostartpage_handle');
     }
 
@@ -31,27 +32,53 @@ class action_plugin_autostartpage extends DokuWiki_Action_Plugin {
      * @return void
      */
 
-    public function autostartpage_handle(Doku_Event &$event, $param) {
+    public function autostartpage_handle(Doku_Event &$event, $param) 
+    {
         global $conf;
         global $INFO;
 
-        $templatefile = wikiFN($this->getConf('templatefile'), '', false);
-        if(@file_exists($templatefile)){
-            $wikitext=io_readFile($templatefile);
-        }
-
         $ns=$event->data[0];
         $ns_type=$event->data[1];
-        if($ns_type === "pages" && $wikitext){
-            $id=$ns.":".$conf['start'];
-            $file=wikiFN($id);
+        $wikitext = false;
+        $autocreate = $this->getConf('templatefile');
+        $templatefile = false;
+//        $tests = array();
+
+        $parts = explode( ':', $ns );
+        while( count($parts ) )
+        {
+          $templatefile = wikiFN( join(':', $parts).':'.$autocreate, '', false );
+//          $tests[] = $templatefile;
+          if(@file_exists($templatefile))
+          {
+            $wikitext = io_readFile($templatefile);
+            break;
+          }
+          array_pop( $parts );
+        }
+        if( !$wikitext )
+        {
+          $templatefile = wikiFN( $autocreate, '', false );
+//          $tests[] = $templatefile;
+          if(@file_exists($templatefile))
+          {
+              $wikitext=io_readFile($templatefile);
+          }
+        }
+        
+        if($ns_type === "pages" && $wikitext)
+        {
+//            $id=$ns.":".$conf['start'];
+//            $file=wikiFN($id);
+            $id=$ns;
+            $file=wikiFN($ns);
             $silent=$this->getConf('silent');
             $ns_sepchar = ":";
 
             $parent=implode($ns_sepchar, array_splice(preg_split("/".preg_quote($ns_sepchar, "/")."/", $ns), 0, -1));
             $goodns=preg_replace("/".$conf['sepchar']."/"," ",noNS($ns));
             $page=preg_replace("/".$conf['sepchar']."/"," ",noNS($id));
-            $f=$conf['start'];
+//            $f=$conf['start'];
 
             /**THESE ARE THE CODES FOR TEMPLATES**/
             // @ID@         full ID of the page
@@ -84,35 +111,43 @@ class action_plugin_autostartpage extends DokuWiki_Action_Plugin {
             $wikitext=preg_replace("/@!PAGE@/",ucfirst($page), $wikitext);
             $wikitext=preg_replace("/@!!PAGE@/",$uupage=ucwords($page), $wikitext);
             $wikitext=preg_replace("/@!PAGE!@/",strtoupper($page), $wikitext);
-            $wikitext=preg_replace("/@FILE@/",$f, $wikitext);
-            $wikitext=preg_replace("/@!FILE@/",ucfirst($f), $wikitext);
-            $wikitext=preg_replace("/@!FILE!@/",strtoupper($f), $wikitext);
+//            $wikitext=preg_replace("/@FILE@/",$f, $wikitext);
+//            $wikitext=preg_replace("/@!FILE@/",ucfirst($f), $wikitext);
+//            $wikitext=preg_replace("/@!FILE!@/",strtoupper($f), $wikitext);
             $wikitext=preg_replace("/@USER@/",$_SERVER['REMOTE_USER'], $wikitext);
             $wikitext=preg_replace("/@NAME@/",$INFO['userinfo']['name'], $wikitext);
             $wikitext=preg_replace("/@MAIL@/",$INFO['userinfo']['mail'], $wikitext);
             $wikitext=preg_replace("/@DATE@/",strftime("%D"), $wikitext);
             $wikitext=preg_replace("/@PARENT@/",$parent, $wikitext);
-            if(preg_match("/@DATE=(.*)@/", $wikitext, $matches)){
+            if(preg_match("/@DATE=(.*)@/", $wikitext, $matches))
+            {
                 $wikitext=str_replace($matches[0], strftime($matches[1]), $wikitext);
             }
 
-            if(auth_quickaclcheck($id) >= AUTH_CREATE || $this->getConf('forcecreate')){
-
-                if(!@file_exists($file)){
-
+            if(auth_quickaclcheck($id) >= AUTH_CREATE || $this->getConf('forcecreate'))
+            {
+                if(!@file_exists($file))
+                {
                     saveWikiText($id, $wikitext, "autostartpage", $minor = false); 
                     $ok = @file_exists($file);
 
-                    if ($ok and !$silent){
+                    if ($ok and !$silent)
+                    {
                         msg($this->getLang('createmsg').' <a href="'.wl($id).'">'.noNS($id).'</a>', 1);
-                    }elseif (!$silent){
+                    }
+                    elseif (!$silent)
+                    {
                         msg($this->getLang('failmsg'), -1);
                     }
                 }
-            }else{
+            }
+            else
+            {
                 msg($this->getLang('failmsg'), -1);
             }
-        }elseif (!$wikitext and !$silent){
+        }
+        elseif (!$wikitext and !$silent)
+        {
             msg($this->getLang('templatemissing'));
         }
     }
