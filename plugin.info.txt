@@ -1,7 +1,7 @@
-base   autostartpage
-author Charles Knight
-email  charles@rabidaudio.com
-date   2015-01-02
-name   Automatic startpage plugin
-desc   add a start page based on a template
-url    https://github.com/rabidaudio/dokuwiki-plugin-autostartpage
+base   autons
+author Vsevolod Lutovinov
+email  klopp@yandex.ru
+date   2015-05-29
+name   AutoNS
+desc   Create namespaces from templates
+url    https://github.com/klopp/dokuwiki-plugin-autostartpage
