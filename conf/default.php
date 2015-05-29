@@ -4,7 +4,5 @@
  *
  * @author Charles Knight <charles@rabidaudio.com>
  */
-
-$conf['templatefile']    = '_autostartpage';
-$conf['silent']          = 1;
-$conf['forcecreate']     = 0;
+$conf['auto_template_page'] = '_autopage';
+$conf['auto_template_ns'] = '_autons';

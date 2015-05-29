@@ -4,8 +4,7 @@
  *
  * @author Charles Knight <charles@rabidaudio.com>
  */
-
-
-$meta['templatefile'] = array('string');
-$meta['silent']       = array('onoff');
-$meta['forcecreate']  = array('onoff', '_caution' => 'danger');
+$meta['auto_template_page'] = array('string' 
+);
+$meta['auto_template_ns'] = array('string' 
+);

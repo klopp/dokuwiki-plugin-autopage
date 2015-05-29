@@ -1,7 +1,7 @@
-base   autons
+base   autopage
 author Vsevolod Lutovinov
 email  klopp@yandex.ru
 date   2015-05-29
-name   AutoNS
-desc   Create namespaces from templates
-url    https://github.com/klopp/dokuwiki-plugin-autostartpage
+name   AutoPage
+desc   Create pages from GET parameters/templates and namespaces from templates
+url    https://github.com/klopp/dokuwiki-plugin-autopage

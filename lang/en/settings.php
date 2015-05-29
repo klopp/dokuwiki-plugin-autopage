@@ -7,6 +7,5 @@
  * @author     Charles Knight <charles@rabidaudio.com>
  */
 
-$lang['templatefile']    = "The page to use as a template for new start pages (include namespaces)";
-$lang['silent']          = "Uncheck to show message on page creation";
-$lang['forcecreate']     = "Create page even if the user lacks permissions to do so (security risk)";
+$lang['auto_template_ns']    = "Template for namespaces";
+$lang['auto_template_page']    = "Template for pages";
