@@ -75,13 +75,10 @@ class action_plugin_autopage extends DokuWiki_Action_Plugin
         global $ACT;
         global $INPUT;
         
-        if( $ACT != 'edit' ) return;
-        
-        if( @file_exists( wikiFN( $ID ) ) ) return;
-        
+        if( $ACT != 'edit' ) return;               
         if( !is_object( $INPUT ) || !$INPUT->get || !$INPUT->get->param( 
                 'autot' ) ) return;
-        
+        if( @file_exists( wikiFN( $ID ) ) ) return;
         if( auth_quickaclcheck( $ID ) < AUTH_CREATE ) return;
         
         $wikitext = $this->autopage_get_template( 'auto_template_page', $ID );
@@ -105,10 +102,6 @@ class action_plugin_autopage extends DokuWiki_Action_Plugin
      */
     public function autopage_create_ns(Doku_Event &$event, $param)
     {
-        global $conf;
-        global $INFO;
-        global $INPUT;
-        
         $ns = $event->data[0];
         $ns_type = $event->data[1];
         
