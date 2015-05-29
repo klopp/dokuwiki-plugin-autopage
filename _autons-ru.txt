@@ -1,0 +1,18 @@
+====== @!PAGE@ ======
+
+<html><div style="displai:inline;text-align:right;width:100%;font-size:80%;"><a href="#" 
+onclick="{t=prompt(&quot;Название темы&quot;);if(!t)return false;window.location=window.location.pathname+'/@AUTO_AUTOID@?do=edit&autot='+encodeURIComponent(t);return false;}">[зачать новую тему]</a></div></html>
+
+<dtree ns="." 
+    head="false" 
+    openall="true" 
+    nopages="false" 
+    skin="bluebooks" 
+    style="background-color:#FFF">
+</dtree>
+
+<html><div style="displai:inline;text-align:right;width:100%;font-size:80%;"><a href="#" 
+onclick="{t=prompt(&quot;Название темы&quot;);if(!t)return false;window.location=window.location.pathname+'/@AUTO_AUTOID@?do=edit&autot='+encodeURIComponent(t);return false;}">[начать новую тему]</a></div></html>
+
+~~NOCACHE~~
+~~DISCUSSION~~
