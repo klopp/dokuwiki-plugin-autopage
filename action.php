@@ -28,7 +28,7 @@ class action_plugin_autopage extends DokuWiki_Action_Plugin
 
     private function plog($s)
     {
-        $f = fopen( "/tmp/autopage.log", "a" );
+        $f = fopen( '/tmp/autopage.log', 'a' );
         if( $f )
         {
             fwrite( $f, "$s\n" );
@@ -88,14 +88,9 @@ class action_plugin_autopage extends DokuWiki_Action_Plugin
         if( !$wikitext ) return;
         
         $t = $INPUT->get->str( 'autot' );
-        $wikitext = str_replace( '@TITLE@', $t, $wikitext );
-        $wikitext = str_replace( '@PAGE@', $t, $wikitext );
-        $wikitext = str_replace( '@!PAGE@', ucfirst( $t ), $wikitext );
-        $wikitext = str_replace( '@!!PAGE@', ucwords( $t ), $wikitext );
-        $wikitext = str_replace( '@!PAGE!@', strtoupper( $t ), $wikitext );
-        
+        $wikitext = str_replace( '@TITLE@', $t, $wikitext );       
         saveWikiText( $ID, $wikitext, 'Created by AutoPage Plugin' );
-        
+
         send_redirect( wl( $ID ) );
     }
 
@@ -117,7 +112,7 @@ class action_plugin_autopage extends DokuWiki_Action_Plugin
         $ns = $event->data[0];
         $ns_type = $event->data[1];
         
-        if( $ns_type !== "pages" ) return;
+        if( $ns_type !== 'pages' ) return;
         if( auth_quickaclcheck( $ns ) < AUTH_CREATE ) return;
         if( @file_exists( wikiFN( $ns ) ) ) return;
         
