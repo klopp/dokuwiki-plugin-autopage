@@ -70,10 +70,24 @@ class action_plugin_autopage extends DokuWiki_Action_Plugin
         $e->data = $this->_auto_parse_template( $e->data );
     }
 
-    private function autopage_get_template($name, $id)
+    private function autopage_get_template($name, $id, $language)
     {
-        $autocreate = $this->getConf( $name );
+        global $conf;
+        
         $wikitext = false;
+        
+        if( !$language )
+        {
+            if( $conf['lang'] )
+            {
+                $wikitext = $this->autopage_get_template( $name, $id, 
+                        '-' . $conf['lang'] );
+                if( $wikitext ) return $wikitext;
+            }
+        }
+        
+        $autocreate = $this->getConf( $name );
+        if( $language ) $autocreate .= $language;
         $ns = getNS( $id );
         
         $parts = explode( ':', $ns );
@@ -102,7 +116,6 @@ class action_plugin_autopage extends DokuWiki_Action_Plugin
         );
         $wikitext = parsePageTemplate( $data );
         return $wikitext;
-        //return $this->_auto_parse_template( $wikitext );
     }
 
     function autopage_create_page(&$e, $param)
@@ -129,8 +142,9 @@ class action_plugin_autopage extends DokuWiki_Action_Plugin
         saveWikiText( $ID, $wikitext, 'Created by AutoPage Plugin' );
         $autoid = p_get_metadata( 'plugin_autopage', 'autoid' );
         $autoid++;
-        p_set_metadata( 'plugin_autopage', array('autoid' => $autoid 
-        ) );
+        p_set_metadata( 'plugin_autopage', 
+                array('autoid' => $autoid 
+                ) );
         
         send_redirect( wl( $ID ) );
     }
