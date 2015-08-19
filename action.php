@@ -3,10 +3,12 @@
  * DokuWiki Plugin autopage (Action Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
- * @author  Charles Knight <charles@rabidaudio.com>
+ * @author  Vsevolod Lutovinov <klopp@yandex.ru>
+ * 
+ * This plugin is evolution of autostartpage plugin:
+ *  http://dokuwiki.org/plugin:autostartpage 
  */
 
-// must be run within Dokuwiki
 if( !defined( 'DOKU_INC' ) ) die();
 
 class action_plugin_autopage extends DokuWiki_Action_Plugin
@@ -26,16 +28,6 @@ class action_plugin_autopage extends DokuWiki_Action_Plugin
                 'autopage_create_page' );
         $controller->register_hook( 'TPL_CONTENT_DISPLAY', 'BEFORE', $this, 
                 'autopage_parse_template' );
-    }
-
-    private function plog($s)
-    {
-        $f = fopen( '/tmp/autopage.log', 'a' );
-        if( $f )
-        {
-            fwrite( $f, "$s\n" );
-            fclose( $f );
-        }
     }
 
     function auto_replace_internals($m)
@@ -152,7 +144,6 @@ class action_plugin_autopage extends DokuWiki_Action_Plugin
     /**
      * [Custom event handler which performs action]
      *
-     * @author Charles Knight, charles@rabidaudio.com
      * @param Doku_Event $event  event object by reference
      * @param mixed      $param  [the parameters passed as fifth argument to register_hook() when this
      *                           handler was registered]
