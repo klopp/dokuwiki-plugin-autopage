@@ -1,7 +1,7 @@
 base   autopage
-author Vsevolod Lutovinov
-email  klopp@yandex.ru
-date   2015-05-29
 name   AutoPage
 desc   Create pages from GET parameters/templates and namespaces from templates
+author Vsevolod Lutovinov
+email  klopp@yandex.ru
 url    https://github.com/klopp/dokuwiki-plugin-autopage
+date   2015-05-29
