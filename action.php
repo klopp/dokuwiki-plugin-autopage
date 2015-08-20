@@ -3,7 +3,7 @@
  * DokuWiki Plugin autopage (Action Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
- * @author  Vsevolod Lutovinov <klopp@yandex.ru>
+ * @author  Vseроvolod Lutovinov <klopp@yandex.ru>
  * 
  * This plugin is evolution of autostartpage plugin:
  *  http://dokuwiki.org/plugin:autostartpage 
